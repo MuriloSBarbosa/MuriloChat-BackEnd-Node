@@ -19,15 +19,15 @@ export async function sairDaSala(idSala, idUser) {
             isOut: true,
         }, {
             where: {
-                fkSala: idSala,
-                fkUsuario: idUser
+                salaId: idSala,
+                usuarioId: idUser
             }
         });
 
         const chat = await Chat.findOne({
             where: {
-                fkSala: idSala,
-                fkUsuario: {
+                salaId: idSala,
+                usuarioId: {
                     [Op.ne]: null
                 },
                 isOut: false
@@ -53,8 +53,8 @@ export async function removerUsuarioSala(idSala, idUser) {
 
     }, {
         where: {
-            fkSala: idSala,
-            fkUsuario: idUser
+            salaId: idSala,
+            usuarioId: idUser
         }
     });
 
@@ -66,8 +66,8 @@ export function atualizarUsuarioSala(idSala, idUser, isAdmin) {
 
     }, {
         where: {
-            fkSala: idSala,
-            fkUsuario: idUser
+            salaId: idSala,
+            usuarioId: idUser
         }
     })
 }
@@ -75,16 +75,16 @@ export function atualizarUsuarioSala(idSala, idUser, isAdmin) {
 export function verificarUsuarioNaSala(idSala, idUser) {
     return Chat.findAll({
         where: {
-            fkSala: idSala,
-            fkUsuario: idUser
+            salaId: idSala,
+            usuarioId: idUser
         }
     })
 }
 
-export function inserirUser(fkSala, fkUsuario, isAdmin) {
+export async function inserirUser(salaId, usuarioId, isAdmin) {
     return Chat.create({
-        fkSala: fkSala,
-        fkUsuario: fkUsuario,
+        salaId: salaId,
+        usuarioId: usuarioId,
         isAdmin: isAdmin
     });
 }
@@ -94,16 +94,16 @@ export function realocarUser(idSala, idUser) {
         isOut: false
     }, {
         where: {
-            fkUsuario: idUser,
-            fkSala: idSala
+            usuarioId: idUser,
+            salaId: idSala
         }
     });
 }
 
 export function inserirMensagem(idUsuario, idSala, mensagem, dtAgora, isAddUser) {
     return Mensagem.create({
-        fkUsuario: idUsuario,
-        fkSala: idSala,
+        usuarioId: idUsuario,
+        salaId: idSala,
         texto: mensagem,
         dtMensagem: dtAgora,
         isAddUser: isAddUser
@@ -112,8 +112,8 @@ export function inserirMensagem(idUsuario, idSala, mensagem, dtAgora, isAddUser)
 
 export function inserirMensagemImagem(idUsuario, idSala, srcImage, dtAgora) {
     return Mensagem.create({
-        fkUsuario: idUsuario,
-        fkSala: idSala,
+        usuarioId: idUsuario,
+        salaId: idSala,
         dtMensagem: dtAgora,
         srcImage: srcImage
     });
@@ -121,8 +121,8 @@ export function inserirMensagemImagem(idUsuario, idSala, srcImage, dtAgora) {
 
 export function inserirMensagemDoc(idUsuario, idSala, srcDoc, nomeDoc, typeDoc, sizeDoc, dtAgora) {
     return Mensagem.create({
-        fkUsuario: idUsuario,
-        fkSala: idSala,
+        usuarioId: idUsuario,
+        salaId: idSala,
         dtMensagem: dtAgora,
         srcDoc: srcDoc,
         nomeDoc: nomeDoc,
@@ -131,14 +131,14 @@ export function inserirMensagemDoc(idUsuario, idSala, srcDoc, nomeDoc, typeDoc, 
     });
 }
 
-export function listarChats(fkUsuario) {
+export function listarChats(usuarioId) {
     return Sala.findAll({
         include: [
             {
                 model: Chat,
-                attributes: ['fkUsuario', 'fkSala'],
+                attributes: ['usuarioId', 'salaId'],
                 where: {
-                    fkUsuario: fkUsuario,
+                    usuarioId: usuarioId,
                     isOut: false
                 },
             }
@@ -147,9 +147,9 @@ export function listarChats(fkUsuario) {
 
 }
 
-export function listarMensagens(fkSala, limit, skip) {
+export function listarMensagens(salaId, limit, skip) {
     return Mensagem.findAll({
-        attributes: ['texto', 'dtMensagem', 'fkUsuario', 'srcImage', 'srcDoc', 'nomeDoc', 'typeDoc', 'sizeDoc', 'isAddUser'],
+        attributes: ['texto', 'dtMensagem', 'usuarioId', 'srcImage', 'srcDoc', 'nomeDoc', 'typeDoc', 'sizeDoc', 'isAddUser'],
         include: [
             {
                 model: Usuario,
@@ -157,7 +157,7 @@ export function listarMensagens(fkSala, limit, skip) {
             }
         ],
         where: {
-            fkSala: fkSala
+            salaId: salaId
         },
         order: [
             ['dtMensagem', 'DESC']
@@ -177,7 +177,7 @@ export function verUsuariosDaSala(idSala) {
                 model: Chat,
                 attributes: ['isAdmin', 'isOut'],
                 where: {
-                    fkSala: idSala
+                    salaId: idSala
                 }
             },
         ],

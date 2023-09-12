@@ -17,6 +17,7 @@ export async function criarSala(req, res) {
 
     try {
         const sala = await service.cadastrarSala(nome, identificador);
+       
         await service.inserirUser(sala.id, idUsuario, true);
 
         const mensagem = {
@@ -208,11 +209,9 @@ export function listarMensagens(req, res) {
     service.listarMensagens(fkSala, limit, skip)
         .then((mensagens) => {
             const mensagemFormatada = mensagens.map((mensagem) => {
-                if (mensagem.fkUsuario == id) {
+                if (mensagem.usuarioId == id) {
                     mensagem.isRemetente = true;
                 }
-                mensagem.idColor = mensagem.fkUsuario;
-                delete mensagem.fkUsuario;
 
                 const { 'Usuario.nome': nome, 'Usuario.perfilSrc': perfilSrc, ...outrosCampos } = mensagem;
                 delete mensagem['Usuario.nome'];

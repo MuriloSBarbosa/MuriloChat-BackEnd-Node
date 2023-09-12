@@ -2,12 +2,6 @@ import dataBase from "../config/DataBase.mjs";
 import { Sequelize } from "sequelize";
 
 const Usuario = dataBase.define('Usuario', {
-    id: {
-        type: Sequelize.INTEGER,
-        autoIncrement: true,
-        allowNull: false,
-        primaryKey: true
-    },
     nome: {
         type: Sequelize.STRING,
         allowNull: false
@@ -29,8 +23,6 @@ const Usuario = dataBase.define('Usuario', {
         allowNull: true,
         defaultValue: 100
     }
-}, {
-    freezeTableName: true,
 });
 
 Usuario.sync();

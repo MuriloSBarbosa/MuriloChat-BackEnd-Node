@@ -4,12 +4,6 @@ import Usuario from "./Usuario.mjs";
 import Sala from "./Sala.mjs";
 
 const Mensagem = dataBase.define('Mensagem', {
-    id: {
-        type: Sequelize.INTEGER,
-        autoIncrement: true,
-        allowNull: false,
-        primaryKey: true
-    },
     texto: {
         type: Sequelize.STRING,
         allowNull: true
@@ -43,15 +37,11 @@ const Mensagem = dataBase.define('Mensagem', {
         allowNull: false,
         defaultValue: false
     }
-},
-    {
-        freezeTableName: true,
-    }
-);
+});
 
 
-Mensagem.belongsTo(Usuario, { foreignKey: 'fkUsuario' });
-Mensagem.belongsTo(Sala, { foreignKey: 'fkSala' });
+Mensagem.belongsTo(Usuario, { foreignKey: "usuarioId" });
+Mensagem.belongsTo(Sala, { foreignKey: "salaId" });
 
 Mensagem.sync();
 

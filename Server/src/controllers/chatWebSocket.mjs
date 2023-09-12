@@ -46,7 +46,6 @@ async function enviarMensagem(mensagem) {
             "Usuario.id" : idUsuario,
             texto: mensagemDigitada,
             token: tokenUsuario,
-            idColor: idUsuario,
             perfilSrc: perfilSrc,
             dtMensagem: dtAgora
         }

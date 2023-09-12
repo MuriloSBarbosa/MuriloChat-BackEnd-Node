@@ -13,7 +13,11 @@ const dataBase = new Sequelize(nomeBanco, usuarioBanco, senhaBanco, {
     host: hostBanco,
     port: portaBanco,
     dialect: dialectBanco,
-    logging: false,
+    logging: true,
+    define: {
+        freezeTableName: true,
+        underscored: true
+    }
 });
 
 dataBase.authenticate().then(() => {
