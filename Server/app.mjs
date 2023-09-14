@@ -5,6 +5,8 @@ import cors from 'cors';
 import { setarOnline, desconectar } from './src/controllers/chatWebSocket.mjs';
 import { configDotenv } from 'dotenv';
 configDotenv();
+import { criarDiretorios } from './src/utils/multerConfig.mjs';
+criarDiretorios();
 
 const app = express();
 

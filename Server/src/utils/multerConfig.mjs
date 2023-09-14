@@ -45,3 +45,15 @@ export const filtro = (req, file, cb) => {
 // o upload recebe dois parametros, o primeiro é o storage, que é o local onde o arquivo será salvo	
 // e o segundo é o filtro, que é o tipo de arquivo que será aceito    
 export const upload = multer({ storage, filtro });
+
+
+import fs from "fs";
+export const criarDiretorios = () => {
+    const diretorios = ["./public/uploads", "./public/uploads/images", "./public/uploads/perfil", "./public/uploads/wallpaper", "./public/uploads/documents"];
+
+    diretorios.forEach(diretorio => {
+        if (!fs.existsSync(diretorio)) {
+            fs.mkdirSync(diretorio);
+        }
+    });
+}
