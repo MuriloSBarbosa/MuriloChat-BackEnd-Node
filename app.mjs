@@ -19,8 +19,8 @@ import { autenticarTokenUsuario } from './src/config/jwtConfig.mjs';
 import chatRouter from './src/routes/chatRouter.mjs';
 import userRouter from './src/routes/usuarioRouter.mjs';
 
-app.use('/chat', autenticarTokenUsuario, chatRouter);
-app.use('/usuario', userRouter);
+app.use('/chats', autenticarTokenUsuario, chatRouter);
+app.use('/usuarios', userRouter);
 
 const port = 8080;
 const server = app.listen(port, () => {
